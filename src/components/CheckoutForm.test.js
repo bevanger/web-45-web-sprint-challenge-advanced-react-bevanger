@@ -16,7 +16,38 @@ test("form header renders", () => {
 });
 
 
-test("form shows success message on submit with form details", async () => {
-    
+test("form shows success message on submit with form details",  () => {
+  
+    render(<CheckoutForm/>);
+    const firstNameInput = screen.getByLabelText(/first name:/i);
+    userEvent.type(firstNameInput, "Bailey");
+    const lastNameInput = screen.getByLabelText(/last name:/i);
+    userEvent.type(lastNameInput, "Evanger");
+    const addressInput = screen.getByLabelText(/address:/i);
+    userEvent.type(addressInput, "123 school way");
+    const cityInput = screen.getByLabelText(/city:/i);
+    userEvent.type(cityInput, "Seattle");
+    const zipInput = screen.getByLabelText(/zip:/i);
+    const stateInput = screen.getByLabelText(/state:/i);
+    userEvent.type(stateInput, "Washington");
+    userEvent.type(zipInput, "98101");
+    const checkoutButton = screen.getByRole('button');
+    userEvent.click(checkoutButton);
 
+        const successMessage = screen.getByTestId("successMessage")
+        const submittedFirstName = screen.getByText(/bailey/i);
+        const submittedLastName = screen.getByText(/evanger/i);
+        const submittedAddress = screen.getByText(/123 school way/i);
+        const submittedCity = screen.getByText(/seattle/i);
+        const submittedState = screen.getByText(/washington/i);
+        const submittedZip = screen.getByText(/98101/i);
+
+        expect(successMessage).toBeInTheDocument();
+        expect(submittedFirstName).toBeInTheDocument();
+        expect(submittedLastName).toBeInTheDocument();
+        expect(submittedAddress).toBeInTheDocument();
+        expect(submittedCity).toBeInTheDocument();
+        expect(submittedState).toBeInTheDocument();
+        expect(submittedZip).toBeInTheDocument();
+ 
 });
